@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { CameraOptions} from '@ionic-native/camera';
-import { Camera } from '@ionic-native/camera/ngx';
+import { CameraOptions, Camera} from '@ionic-native/camera';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { API_CONFIG } from '../../config/api.config';
 import { ClienteDTO } from '../../models/cliente.dto';
@@ -81,9 +80,33 @@ export class ProfilePage {
     }, (err) => {
 
     });
+  }
+
+  getGalleryPicture(){
+
+    this.cameraOn = true;
+
+    const options: CameraOptions = {
+      quality: 100,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.PNG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+
+    this.camera.getPicture(options).then((imageData) => {
+      this.picture = 'data:image/png;base64,' + imageData;
+      this.cameraOn = false;
+    }, (err) => {
+
+    });
     
 
-  }
+  } 
+  
+
+
+  
 
   sendPicture(){
     this.clienteService.uploadPicture(this.picture)
