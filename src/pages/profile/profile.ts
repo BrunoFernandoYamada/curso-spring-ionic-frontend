@@ -65,7 +65,7 @@ export class ProfilePage {
       .subscribe(response => {
         this.cliente.imageUrl = `${API_CONFIG.bucketBaseUrl}/cp${this.cliente.id}.jpg`;
         this.blobToDataUrl(response).then(dataUrl => {
-          let str = dataUrl as string;
+          let str : string = dataUrl as string;
           this.profileImage = this.sanitizer.bypassSecurityTrustUrl(str);
         });
       },
